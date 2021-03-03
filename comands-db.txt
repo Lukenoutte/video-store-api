@@ -1,0 +1,11 @@
+yarn sequelize db:create
+
+
+*Create migrations
+yarn sequelize migration:create --name=create-users
+
+Run migrations
+yarn sequelize db:migrate
+
+Undo
+yarn sequelize db:migrate:undo
