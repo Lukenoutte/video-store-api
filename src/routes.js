@@ -5,12 +5,14 @@ const MovieController = require("./controllers/MovieController");
 
 const RentController = require("./controllers/RentController");
 
-routes.post("/users", UserController.store);
+routes.post("/users", UserController.storeUser);
 
-routes.post("/movies", MovieController.store);
+routes.post("/movies", MovieController.storeMovie);
+routes.get("/movies", MovieController.moviesAvaliable);
+routes.post("/movies/search", MovieController.searchMovieByTitle);
 
-
-routes.post("/rent/:movie_id", RentController.store);
+routes.post("/rent", RentController.rentMovie);
+routes.post("/rent/give-back", RentController.giveBackMovie);
 
 
 

@@ -2,7 +2,7 @@ const User = require("../models/User");
 
 
 module.exports = {
-    async store (req, res){
+    async storeUser (req, res){
         try{
         const { email, name, password } = req.body;
 
