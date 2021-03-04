@@ -2,15 +2,11 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable("dvds", {
+    await queryInterface.createTable("rents", {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
-        allowNull: false,
-      },
-      quantity: {
-        type: Sequelize.INTEGER,
         allowNull: false,
       },
       movie_id: {
@@ -20,10 +16,25 @@ module.exports = {
         onUpdate: "CASCADE",
         OnDelete: "CASCADE"
       },
+      user_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        refereces: { model: "users", key: "id" },
+        onUpdate: "CASCADE",
+        OnDelete: "CASCADE"
+      },
+      created_at: {
+        type: Sequelize.DATE,
+        allowNull: false,
+      },
+      updated_at: {
+        type: Sequelize.DATE,
+        allowNull: false,
+      },
     });
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable("dvds");
+    await queryInterface.dropTable("rents");
   },
 };

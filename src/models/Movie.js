@@ -1,25 +1,11 @@
-const { Model, DataTypes } = require("sequelize");
+const { Sequelize } = require("sequelize");
+const sequelize = require("../database");
 
+var Movie = sequelize.define('movie', {
+  title: Sequelize.STRING,
+  director: Sequelize.STRING,
+  quantity: Sequelize.INTEGER,
+});
 
-class Movie extends Model {
-  static init(sequelize) {
-    super.init(
-      {
-        title: DataTypes.STRING,
-        director: DataTypes.STRING,
-      },
-      {
-        sequelize
-      }
-    );
-  }
-
-  static associations(models) {
-    this.hasMany(models.Dvd, { foreignKey: "movie_id", as:"dvds"});
-}
-
-
-
-}
 
 module.exports = Movie;

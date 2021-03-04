@@ -10,7 +10,7 @@ module.exports = {
 
         return res.json(user.email);
         }catch(err){
-            console.log(err);
+            res.status(500).json(err);
         }
     }
 }
