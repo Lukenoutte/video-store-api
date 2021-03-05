@@ -7,5 +7,15 @@ yarn sequelize migration:create --name=create-users
 Run migrations
 yarn sequelize db:migrate
 
-Undo
-yarn sequelize db:migrate:undo
+Undo Migrade
+yarn sequelize db:migrate:undo:all
+
+
+Seed
+yarn sequelize db:seed:all
+
+*Create seed
+yarn sequelize seed:create --name users-seed
+
+Undo Seed
+yarn sequelize db:seed:undo:all

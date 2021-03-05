@@ -9,7 +9,7 @@ const RentController = require("./controllers/RentController");
 
 routes.post("/users", guest, UserController.createUser);
 routes.post("/users/login", guest, UserController.login);
-routes.get("/users/logout", authMiddleware, UserController.logout);
+
 
 routes.post("/movies", authMiddleware, MovieController.storeMovie);
 routes.get("/movies", MovieController.moviesAvaliable);

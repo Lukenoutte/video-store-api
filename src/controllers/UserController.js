@@ -61,21 +61,8 @@ const createUser = async (req, res) => {
   }
 };
 
-const logout = async (req, res) => {
-  try {
-    const authHeader = req.headers.autorization;
-    if (authHeader) {
-      req.headers.autorization = "";
-    }
-
-    return res.send({message: "Logout."});
-  } catch (err) {
-    res.status(500).send({ error: "Error on logout." });
-  }
-};
-
 module.exports = {
   createUser,
   login,
-  logout,
+
 };
