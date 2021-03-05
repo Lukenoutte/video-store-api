@@ -4,52 +4,78 @@ const { Op } = require("sequelize");
 const jwt = require("jsonwebtoken");
 const authConfig = require("../config/auth");
 
-
 function generateToken(params = {}) {
-    return jwt.sign(params, authConfig.secret, {
-      expiresIn: "1d",
-    });
-  }
+  return jwt.sign(params, authConfig.secret, {
+    expiresIn: "1d",
+  });
+}
 
-const authenticateUser = async (req, res) => {
+const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
     const user = await User.findOne({
       where: {
         email: {
-         [Op.iLike]: `%${email}`,
+          [Op.iLike]: `%${email}`,
         },
       },
     });
 
     if (!user) {
-      res.status(400).send({ error: "User not found!" });
+      return res.status(400).send({ error: "User not found." });
     }
 
     if (!(await bcrypt.compare(password, user.password))) {
-      res.status(400).send({ error: "Invalid password!" });
+      return res.status(400).send({ error: "Invalid password." });
     }
     user.password = undefined;
     res.send({ user, token: generateToken({ id: user.id }) });
   } catch (err) {
-    console.log(err);
+    res.status(500).send({ error: "Error on try login." });
   }
 };
 
-const storeUser = async (req, res) => {
+const createUser = async (req, res) => {
   try {
     const { email, name, password } = req.body;
 
-    const user = await User.create({ email, name, password });
+    await User.findOrCreate({
+      where: {
+        email: email,
+      },
+      defaults: { email, name, password },
+    }).then(function (result) {
+      var user = result[0],
+        created = result[1];
 
-    user.password = undefined;
-    return res.json(user);
+      if (!created) {
+        return res.status(400).send({ error: "User already exists" });
+      }
+
+      user.password = undefined;
+      res.json(user);
+    });
   } catch (err) {
-    res.status(500).json(err);
+    res.status(500).send({ error: "Error on create a new user." });
+  }
+};
+
+const logout = async (req, res) => {
+  try {
+    const authHeader = req.headers.autorization;
+    if (authHeader) {
+      req.headers.autorization = "";
+    }
+
+    return res.send({message: "Logout."});
+  } catch (err) {
+    res.status(500).send({ error: "Error on logout." });
   }
 };
 
 module.exports = {
-  storeUser, authenticateUser
+  createUser,
+  login,
+  logout,
 };

@@ -10,11 +10,11 @@ const rentMovie = async (req, res) => {
     const movie = await Movie.findByPk(movie_id);
 
     if (!user) {
-      return res.status(400).json({ error: "User not found" });
+      return res.status(400).json({ error: "User not found." });
     }
 
     if (!movie) {
-      return res.status(400).json({ error: "Movie not found" });
+      return res.status(400).json({ error: "Movie not found." });
     }
 
     if (movie.quantity > 0) {
@@ -24,10 +24,10 @@ const rentMovie = async (req, res) => {
 
       return res.json(rent);
     } else {
-      return res.status(400).json({ error: "Movie not avaliable" });
+      return res.status(400).json({ error: "Movie not avaliable." });
     }
   } catch (err) {
-    res.status(500).json(err);
+    res.status(500).send({ error: "Error on rent a movie." });
   }
 };
 
@@ -35,14 +35,19 @@ const giveBackMovie = async (req, res) => {
   try {
     const { rent_id } = req.body;
     const rent = await Rent.findByPk(rent_id);
+
+    if (!rent) {
+      return res.status(400).send({ error: "This rent don't exist." });
+    }
+
     const movie = await Movie.findByPk(rent.movie_id);
     movie.quantity++;
     await movie.save();
     await rent.destroy();
-    
-    res.send();
+
+    res.send({message: "You returned the movie."});
   } catch (err) {
-    res.status(500).json(err);
+    res.status(500).send({ error: "Error on give back a movie." });
   }
 };
 

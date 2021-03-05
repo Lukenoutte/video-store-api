@@ -13,7 +13,7 @@ const moviesAvaliable = async (req, res) => {
 
     return res.json(movies);
   } catch (err) {
-    res.status(500).json(err);
+    res.status(500).send({ error: "Error on get avaliable movies." });
   }
 };
 
@@ -21,11 +21,23 @@ const storeMovie = async (req, res) => {
   try {
     const { title, director, quantity } = req.body;
 
-    const movie = await Movie.create({ title, director, quantity });
+    await Movie.findOrCreate({
+      where: {
+        title: { [Op.iLike]: title },
+      },
+      defaults: { title, director, quantity },
+    }).then(function (result) {
+      var movie = result[0],
+        created = result[1];
 
-    return res.json(movie);
+      if (!created) {
+        return res.status(400).send({ error: "Movie already exists" });
+      }
+
+      res.json(movie);
+    });
   } catch (err) {
-    res.status(500).json(err);
+    res.status(500).send({ error: "Error on store a new movie." });
   }
 };
 
@@ -34,17 +46,20 @@ const searchMovieByTitle = async (req, res) => {
     const { title } = req.body;
 
     const movies = await Movie.findAll({
-      limit: 10,
       where: {
         title: {
-          [Op.like]: "%" + title  + "%",
+          [Op.iLike]: "%" + title + "%",
         },
       },
     });
 
+    if (!movies || movies.length === 0) {
+      return res.json({ message: "No movie found." });
+    }
+
     return res.json(movies);
   } catch (err) {
-    res.status(500).json(err);
+    res.status(500).send({ error: "Error on search a movie by title." });
   }
 };
 
