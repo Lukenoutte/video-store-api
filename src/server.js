@@ -1,12 +1,11 @@
 const express = require("express");
-const app = express();
-const routes = require("./routes");
+const routes  = require("./routes");
+const server = express();
 
 require("./database");
 
-app.use(express.json());
-app.use(routes);
+server.use(express.json());
+server.use(routes);
 
-app.listen(3333, () => {
-    console.log("Running on 3333!");
-});
+
+module.exports = server;

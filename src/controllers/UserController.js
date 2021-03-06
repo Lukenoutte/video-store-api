@@ -5,9 +5,7 @@ const jwt = require("jsonwebtoken");
 const authConfig = require("../config/auth");
 
 function generateToken(params = {}) {
-  return jwt.sign(params, authConfig.secret, {
-    expiresIn: "1d",
-  });
+  return jwt.sign(params, authConfig.secret);
 }
 
 const login = async (req, res) => {
@@ -50,11 +48,11 @@ const createUser = async (req, res) => {
         created = result[1];
 
       if (!created) {
-        return res.status(400).send({ error: "User already exists" });
+        return res.status(400).send({ error: "User already exists." });
       }
 
       user.password = undefined;
-      res.json(user);
+      return res.json(user);
     });
   } catch (err) {
     res.status(500).send({ error: "Error on create a new user." });

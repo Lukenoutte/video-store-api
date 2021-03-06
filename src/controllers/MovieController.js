@@ -11,7 +11,7 @@ const moviesAvaliable = async (req, res) => {
       },
     });
 
-    return res.json(movies);
+    res.json(movies);
   } catch (err) {
     res.status(500).send({ error: "Error on get avaliable movies." });
   }
@@ -34,10 +34,10 @@ const storeMovie = async (req, res) => {
         return res.status(400).send({ error: "Movie already exists" });
       }
 
-      res.json(movie);
+      return res.json(movie);
     });
   } catch (err) {
-    res.status(500).send({ error: "Error on store a new movie." });
+    return res.status(500).send({ error: "Error on store a new movie." });
   }
 };
 
