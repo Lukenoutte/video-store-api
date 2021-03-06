@@ -97,7 +97,7 @@ Requisitos: title
 ##  Cadastrar um filme
 
 
-Rota: /movies/search <br />
+Rota: /movies <br />
 Método: POST <br />
 Requisitos: title, director, quantity <br />
 ❗ __Login Obrigatório__ 
@@ -128,7 +128,7 @@ Requisitos: user_id, movie_id <br />
 ##  Devolver  filme
 
 
-Rota: /rents <br />
+Rota: /rents/give-back <br />
 Método: POST <br />
 Requisitos: rent_id <br />
 ❗ __Login Obrigatório__ 
