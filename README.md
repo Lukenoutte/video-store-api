@@ -54,7 +54,7 @@ Requisitos: name, email, password
 
 ```bash
 {
-	"name": "Maria 5",
+	"name": "Maria Santos",
 	"email": "maria6@hotmail.com",
 	"password": "1234"
 }
