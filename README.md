@@ -1,6 +1,6 @@
 ## 🎯 Sobre
 
-Cadastre usuários, filmes, alugue e devolva dvds nessa api de locadora.
+Cadastre usuários, alugue  e devolva filmes nessa api de locadora.
 
 
 ## 🚀 Tecnologias
