@@ -15,11 +15,11 @@ describe("User Controller Tests", () => {
 
 
     expect(res.statusCode).toBe(200);
-    expect(res.body.email).toBe(emailToCreate);
+    expect(res.body.email).toBe(email);
   });
 
   it("Create user that already exist", async () => {
-    let emailToCreate = "test@gmail.com";
+
     const res = await request(app).post("/users").send({
       email: email,
       name: "Test user already existe",
