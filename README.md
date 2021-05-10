@@ -26,23 +26,23 @@ $ git clone https://github.com/Lukenoutte/locadora-api.git
 $ cd locadora-api
 $ npm install
 ```
-* Entre no diretorio **_locadora-api/src/config_** no arquivo __"database.js"__ altere os campos __username e password__, colocando os dados usados na instalação do PostgreSQL.
+* Entre no diretorio **_locadora-api/src/config_** no arquivo __"database.js"__ altere os campos __username e password__, colocando os dados usados na instalação do PostgreSQL. Obs: username padrão é "postgres".
 
 ## Banco de dados
 
 ```bash
-$ npm sequelize db:create     # Crie o banco de dados.
-$ npm sequelize db:migrate    # Crie as tabelas.
-$ npm sequelize db:seed:all   # Alimente banco de dados com dados falsos.
+$ yarn sequelize db:create     # Crie o banco de dados.
+$ yarn sequelize db:migrate    # Crie as tabelas.
+$ yarn sequelize db:seed:all   # Alimente banco de dados com dados falsos.
 ```
 
 ```bash
-$ npm start
-# The server will initialize in the <http://localhost:3333
+$ yarn start
+# The server will initialize in the <http://localhost:3333>
 ```
 ## 📃 Como usar?
 
-❗ Para rotas que necessitam de login, use o __token__ gerado ao autenticar na rota "/users/login"  em um campo no header chamado __"autorization"__ com o a palavra __Bearer__ antecedendo.
+❗ Para rotas que necessitam de login, use o __token__ gerado ao autenticar na rota "/users/login"  em um campo no header chamado __"authorization"__ com o a palavra __Bearer__ antecedendo.
 ```bash
 Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxjE0OTYxMjA1LCJleHAiOjE2MTUwNDc2MDV9
 ```
@@ -84,15 +84,14 @@ Método: GET <br />
 ##  Pesquisar filme pelo nome
 
 
-Rota: /movies/search <br />
-Método: POST <br />
+Rota: /movies/search?title= <br />
+Método: GET <br />
 Requisitos: title
 
 ```bash
-{
-"title": "Matrix"
-}
+http://localhost:3333/movies/search?title=cidade%20de%20deus
 ```
+obs: Use "%20" insted of space.
 
 ##  Cadastrar um filme
 
@@ -125,18 +124,16 @@ Requisitos: user_id, movie_id <br />
 }
 ```
 
-##  Devolver  filme
+##  Devolver filme
 
 
-Rota: /rents/give-back <br />
-Método: POST <br />
+Rota: /rents/give-back/:rentId <br />
+Método: PATCH <br />
 Requisitos: rent_id <br />
 ❗ __Login Obrigatório__ 
 
 ```bash
-{
-	"rent_id": 4
-}
+	http://localhost:3333/rents/give-back/1
 ```
 
 ## 🔧 Tests

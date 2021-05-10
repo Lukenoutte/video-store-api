@@ -1,5 +1,5 @@
 const authMiddleware = (req, res, next) => {
-  const authHeader = req.headers.autorization;
+  const authHeader = req.headers.authorization;
   const jwt = require("jsonwebtoken");
   const authConfig = require("../config/auth");
 
@@ -24,7 +24,7 @@ const authMiddleware = (req, res, next) => {
 
 const guest = (req, res, next) => {
   try {
-    const authHeader = req.headers.autorization;
+    const authHeader = req.headers.authorization;
     if (authHeader) return res.status(401).send({ error: "You already log in!" });
     next();
   } catch (err) {

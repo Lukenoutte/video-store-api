@@ -33,19 +33,23 @@ const rentMovie = async (req, res) => {
 
 const giveBackMovie = async (req, res) => {
   try {
-    const { rent_id } = req.body;
+    const rent_id = req.params.rentId;
     const rent = await Rent.findByPk(rent_id);
 
     if (!rent) {
       return res.status(400).send({ error: "This rent don't exist." });
     }
+    if (rent.returned)
+      return res
+        .status(400)
+        .send({ error: `Rent id ${rent_id} has already been returned.` });
 
     const movie = await Movie.findByPk(rent.movie_id);
     movie.quantity++;
     await movie.save();
-    await rent.destroy();
-
-    res.send({message: "You returned the movie."});
+    rent.returned = true;
+    await rent.save();
+    res.send({ message: `You returned the movie with id ${rent_id}.` });
   } catch (err) {
     res.status(500).send({ error: "Error on give back a movie." });
   }

@@ -14,7 +14,7 @@ describe("Rent Controller Tests", () => {
         user_id: 1,
         movie_id: movie_id,
       })
-      .set("autorization", token);
+      .set("authorization", token);
 
     expect(res.statusCode).toBe(200);
     expect(res.body.movie_id).toBe(movie_id);
@@ -27,7 +27,7 @@ describe("Rent Controller Tests", () => {
       .send({
         rent_id: rent_id,
       })
-      .set("autorization", token);
+      .set("authorization", token);
 
     console.log(res.body);
 
@@ -43,7 +43,7 @@ describe("Rent Controller Tests", () => {
         user_id: 1,
         movie_id: movie_id,
       })
-      .set("autorization", token);
+      .set("authorization", token);
 
     expect(res.statusCode).toBe(400);
     expect(res.body.error).toBe("Movie not found.");

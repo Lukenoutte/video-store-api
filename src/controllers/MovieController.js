@@ -43,7 +43,8 @@ const storeMovie = async (req, res) => {
 
 const searchMovieByTitle = async (req, res) => {
   try {
-    const { title } = req.body;
+    const title = req.query.title;
+    title.replace("%20", " ");
 
     const movies = await Movie.findAll({
       where: {

@@ -13,9 +13,9 @@ router.post("/users/login", guest, UserController.login);
 
 router.post("/movies", authMiddleware, MovieController.storeMovie);
 router.get("/movies", MovieController.moviesAvaliable);
-router.post("/movies/search", MovieController.searchMovieByTitle);
+router.get("/movies/search", MovieController.searchMovieByTitle);
 
 router.post("/rents", authMiddleware, RentController.rentMovie);
-router.post("/rents/give-back", authMiddleware, RentController.giveBackMovie);
+router.patch("/rents/give-back/:rentId", authMiddleware, RentController.giveBackMovie);
 
 module.exports = router;

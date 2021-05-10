@@ -22,7 +22,7 @@ describe("Movie Controller Tests", () => {
         director: director,
         quantity: quantity,
       })
-      .set("autorization", token);
+      .set("authorization", token);
 
     expect(res.statusCode).toBe(200);
     expect(res.body.title).toBe(title);
