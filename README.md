@@ -23,7 +23,7 @@ $ git clone https://github.com/Lukenoutte/locadora-api.git
 ### 
 
 ```bash
-$ cd locadora-api
+$ cd video-store
 $ yarn install
 ```
 * Entre no diretorio **_locadora-api/src/config_** no arquivo __"database.js"__ altere os campos __username e password__, colocando os dados usados na instalação do PostgreSQL. Obs: username padrão é "postgres".
