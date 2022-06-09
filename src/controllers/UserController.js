@@ -20,9 +20,7 @@ const login = async (req, res) => {
       },
     });
 
-    if (!user) {
-      return res.status(400).send({ error: "User not found." });
-    }
+    if (!user) return res.status(400).send({ error: "User not found." });
 
     if (!(await bcrypt.compare(password, user.password))) {
       return res.status(400).send({ error: "Invalid password." });
@@ -38,22 +36,17 @@ const createUser = async (req, res) => {
   try {
     const { email, name, password } = req.body;
 
-    await User.findOrCreate({
+    const result = await User.findOrCreate({
       where: {
         email: email,
       },
       defaults: { email, name, password },
-    }).then(function (result) {
-      var user = result[0],
-        created = result[1];
-
-      if (!created) {
-        return res.status(400).send({ error: "User already exists." });
-      }
-
-      user.password = undefined;
-      return res.json(user);
-    });
+    })
+    const user = result[0];
+    const wasCreated = result[1];
+    if (!wasCreated) return res.status(400).send({ error: "User already exists." });
+    user.password = undefined;
+    return res.json(user);
   } catch (err) {
     res.status(500).send({ error: "Error on create a new user." });
   }
